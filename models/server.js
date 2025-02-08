@@ -12,7 +12,7 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.usuariosPath, require('../routers/user'))
+        this.app.use(this.usuariosPath, require('../routers/usuarios'))
     }
 
     middlewares(){
