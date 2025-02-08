@@ -1,7 +1,7 @@
 const {response, request}= require('express');
 
 const usuariosGet = (req = request, res = response) => {
-    const {q,nombre = 'no envia',apikey} = req.query;
+    const {q="hola",nombre = 'no envia',apikey=1234} = req.query;
     res.json({
         msg: 'get API - controller',
         q,
