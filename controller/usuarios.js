@@ -93,15 +93,28 @@ const usuariosPost = async (req, res = response) => {
 
 
 const usuariosDelete = async(req, res = response) => {
-    const {id} = req.params;
-    //borrado fisico.
-    //const usuario = await Usuario.findByIdAndDelete(id);
-    //borrado logico:
-    const usuario = await Usuario.findByIdAndUpdate(id, {estado:false});
+    const { id } = req.params;
+    const uid = req.uid; // Obtenemos el UID del usuario autenticado desde el middleware
+    const usuarioAutenticado = req.usuario; // Obtenemos el usuario autenticado desde la req
+
+    // Borrado lógico: cambiamos el estado del usuario a false
+    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
+
+    if (!usuario) {
+        return res.status(404).json({
+            msg: 'Usuario no encontrado en la base de datos'
+        });
+    }
+
+    // Enviar la respuesta con el usuario borrado y el autenticado
     res.json({
-       usuario
+        usuario, // Usuario que se borró
+        usuarioAutenticado // Usuario que realizó la acción
     });
-}
+};
+
+
+
 
 
 
